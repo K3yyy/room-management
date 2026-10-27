@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="RoomManagementApp.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Room Management">
+
+    <Grid Padding="15"
+          RowDefinitions="Auto,Auto,*"
+          RowSpacing="12">
+
+        <!-- Room input form -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="8">
+
+                <Label Text="ROOM MANAGEMENT"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+
+                <Label Text="Add New Room"
+                       FontSize="18"
+                       FontAttributes="Bold" />
+
+                <Entry Placeholder="Room Number (e.g. A101)"
+                       Text="{Binding RoomNum}" />
+
+                <Picker Title="Select Room Type"
+                        ItemsSource="{Binding RoomTypes}"
+                        SelectedItem="{Binding RoomType}" />
+
+                <Entry Placeholder="Price"
+                       Keyboard="Numeric"
+                       Text="{Binding Price}" />
+
+                <Picker Title="Select Status"
+                        ItemsSource="{Binding Statuses}"
+                        SelectedItem="{Binding Status}" />
+
+                <Button Text="Add Room"
+                        Command="{Binding AddRoomCommand}"
+                        BackgroundColor="#1976D2"
+                        TextColor="White" />
+
+                <Label Text="{Binding Message}"
+                       TextColor="Green" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Search section -->
+        <VerticalStackLayout Grid.Row="1"
+                             Spacing="5">
+
+            <Label Text="Search Rooms"
+                   FontSize="18"
+                   FontAttributes="Bold" />
+
+            <Entry Placeholder="Enter room number"
+                   Text="{Binding SearchText}"
+                   ReturnType="Search" />
+
+            <HorizontalStackLayout Spacing="10">
+
+                <Button Text="Search"
+                        Command="{Binding SearchRoomCommand}"
+                        HorizontalOptions="FillAndExpand" />
+
+                <Button Text="Show All"
+                        Command="{Binding ShowAllRoomsCommand}"
+                        HorizontalOptions="FillAndExpand" />
+
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+
+        <!-- Room list -->
+        <Grid Grid.Row="2"
+              RowDefinitions="Auto,*"
+              RowSpacing="5">
+
+            <!-- Three-column header -->
+            <Grid Grid.Row="0"
+                  ColumnDefinitions="*,*,*"
+                  Padding="5"
+                  BackgroundColor="#1976D2">
+
+                <Label Grid.Column="0"
+                       Text="Room Number"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       FontSize="12" />
+
+                <Label Grid.Column="1"
+                       Text="Room Type"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       FontSize="12" />
+
+                <Label Grid.Column="2"
+                       Text="Price"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       FontSize="12" />
+
+            </Grid>
+
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding Rooms}"
+                      HasUnevenRows="True"
+                      SeparatorVisibility="Default">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid ColumnDefinitions="*,*,*"
+                                  Padding="5"
+                                  MinimumHeightRequest="55">
+
+                                <VerticalStackLayout Grid.Column="0"
+                                                     Spacing="3">
+                                    <Label Text="{Binding RoomNum}"
+                                           FontAttributes="Bold" />
+
+                                    <Label Text="{Binding Status}"
+                                           FontSize="11"
+                                           TextColor="Gray" />
+                                </VerticalStackLayout>
+
+                                <Label Grid.Column="1"
+                                       Text="{Binding RoomType}"
+                                       VerticalOptions="Center" />
+
+                                <Label Grid.Column="2"
+                                       Text="{Binding Price, StringFormat='{0:F2}'}"
+                                       VerticalOptions="Center" />
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
